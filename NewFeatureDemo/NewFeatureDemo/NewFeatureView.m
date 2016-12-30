@@ -81,6 +81,15 @@
     page += 0.5;
     
     self.pageC.currentPage = (NSInteger)page;
+    NSLog(@"page = %.2f,count = %zd",page,_pictures.count);
+    
+    //当滚动到最后一页时取消pagecontrol
+//    if ((NSInteger)page == _pictures.count) {
+//        self.pageC.hidden = YES;
+//    }else {
+//        self.pageC.hidden = NO;
+//    }
+    self.pageC.hidden = ((NSInteger)page == _pictures.count);
 }
 
 @end
