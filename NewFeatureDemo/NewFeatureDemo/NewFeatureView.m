@@ -76,7 +76,11 @@
 {
     CGFloat offsetX = scrollView.contentOffset.x;
     
-    self.pageC.currentPage = offsetX / self.frame.size.width;
+    CGFloat page = offsetX / self.frame.size.width;
+    // 当滚动到屏幕一半时就改变page页码
+    page += 0.5;
+    
+    self.pageC.currentPage = (NSInteger)page;
 }
 
 @end
