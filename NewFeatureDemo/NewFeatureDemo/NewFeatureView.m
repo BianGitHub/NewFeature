@@ -33,6 +33,9 @@
     //分页
     scV.pagingEnabled = YES;
     
+    //禁用弹簧效果
+    scV.bounces = NO;
+    
     [self addSubview:scV];
     self.scV = scV;
 }
