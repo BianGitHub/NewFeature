@@ -7,9 +7,11 @@
 //
 
 #import "NewFeatureView.h"
+#import "Masonry.h"
 
 @interface NewFeatureView ()
 @property(nonatomic, weak) UIScrollView *scV;
+@property(nonatomic, weak) UIPageControl *pageC;
 @end
 
 @implementation NewFeatureView
@@ -29,15 +31,27 @@
     //隐藏滚动指示条
     scV.showsVerticalScrollIndicator = NO;
     scV.showsHorizontalScrollIndicator = NO;
-    
     //分页
     scV.pagingEnabled = YES;
-    
     //禁用弹簧效果
     scV.bounces = NO;
-    
     [self addSubview:scV];
     self.scV = scV;
+    
+    UIPageControl *pageC = [[UIPageControl alloc]init];
+    // 设置当前页颜色
+    pageC.currentPageIndicatorTintColor = [UIColor redColor];
+    //设置非当前页颜色
+    pageC.pageIndicatorTintColor = [UIColor greenColor];
+    
+    //不能把pageC添加都scrollVew上, 不然会跟着滚动, 需要添加到view
+    [self addSubview: pageC];
+    self.pageC = pageC;
+    
+    [pageC mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self);
+        make.bottom.equalTo(self).offset(-40);
+    }];
 }
 
 - (void)setPictures:(NSArray *)pictures
@@ -47,9 +61,12 @@
     for (int i = 0; i < _pictures.count; i++) {
         UIImageView *imagePic = [[UIImageView alloc]initWithFrame:CGRectMake(i * self.frame.size.width, 0, self.frame.size.width, self.frame.size.height)];
         imagePic.image = _pictures[i];
-        [self.scV addSubview:imagePic];
+//        [self.scV addSubview:imagePic];
+        //防止盖住pageControl
+        [self.scV insertSubview:imagePic  atIndex:0];
     }
     
     self.scV.contentSize = CGSizeMake((_pictures.count + 1) * self.frame.size.width, 0);
+    self.pageC.numberOfPages = _pictures.count;
 }
 @end
