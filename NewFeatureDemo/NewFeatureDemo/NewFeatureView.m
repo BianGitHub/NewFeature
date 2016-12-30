@@ -92,4 +92,13 @@
     self.pageC.hidden = ((NSInteger)page == _pictures.count);
 }
 
+//scrollview减速时调用
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    // 当滚动到最后一页移除新特性页面
+    if (scrollView.contentOffset.x / self.frame.size.width == _pictures.count) {
+        [self removeFromSuperview];
+    }
+}
+
 @end
