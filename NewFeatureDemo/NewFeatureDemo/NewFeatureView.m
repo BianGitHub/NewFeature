@@ -9,7 +9,7 @@
 #import "NewFeatureView.h"
 #import "Masonry.h"
 
-@interface NewFeatureView ()
+@interface NewFeatureView ()<UIScrollViewDelegate>
 @property(nonatomic, weak) UIScrollView *scV;
 @property(nonatomic, weak) UIPageControl *pageC;
 @end
@@ -33,6 +33,7 @@
     scV.showsHorizontalScrollIndicator = NO;
     //分页
     scV.pagingEnabled = YES;
+    scV.delegate = self;
     //禁用弹簧效果
     scV.bounces = NO;
     [self addSubview:scV];
@@ -69,4 +70,13 @@
     self.scV.contentSize = CGSizeMake((_pictures.count + 1) * self.frame.size.width, 0);
     self.pageC.numberOfPages = _pictures.count;
 }
+
+#pragma mark - scrollVeiw代理方法
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetX = scrollView.contentOffset.x;
+    
+    self.pageC.currentPage = offsetX / self.frame.size.width;
+}
+
 @end
