@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface NewFeatureView : UIView
-
+@property(nonatomic, strong) NSArray *pictures;
 @end

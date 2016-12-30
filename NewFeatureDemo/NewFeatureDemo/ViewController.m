@@ -14,12 +14,15 @@
 @end
 
 @implementation ViewController
+{
+    NSArray<UIImage *> *_pictures;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.hasNewFeature = YES;
-    
+    [self loadData];
     [self setupUI];
 }
 
@@ -34,10 +37,20 @@
     //是否显示新特性页面
     if (_hasNewFeature) {
         NewFeatureView *NFV = [[NewFeatureView alloc]initWithFrame:self.view.bounds];
-        NFV.backgroundColor = [UIColor redColor];
+//        NFV.backgroundColor = [UIColor redColor];
         [self.view addSubview:NFV];
+        NFV.pictures = _pictures;
     }
 }
 
-
+//加载数据(本地图片)
+- (void)loadData
+{
+    NSMutableArray *arrM = [NSMutableArray array];
+    for (int i = 0; i < 4; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"common_h%zd",i+1]];
+        [arrM addObject:image];
+    }
+    _pictures = arrM.copy;
+}
 @end
