@@ -7,15 +7,18 @@
 //
 
 #import "ViewController.h"
+#import "NewFeatureView.h"
 
 @interface ViewController ()
-
+@property(nonatomic, assign) BOOL hasNewFeature;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.hasNewFeature = YES;
     
     [self setupUI];
 }
@@ -27,6 +30,13 @@
     //修改图片模式
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView];
+    
+    //是否显示新特性页面
+    if (_hasNewFeature) {
+        NewFeatureView *NFV = [[NewFeatureView alloc]initWithFrame:self.view.bounds];
+        NFV.backgroundColor = [UIColor redColor];
+        [self.view addSubview:NFV];
+    }
 }
 
 
