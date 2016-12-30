@@ -65,12 +65,34 @@
 //        [self.scV addSubview:imagePic];
         //防止盖住pageControl
         [self.scV insertSubview:imagePic  atIndex:0];
+        
+        UIButton *moreBtn = [[UIButton alloc]init];
+        [moreBtn setBackgroundImage:[UIImage imageNamed:@"common_more_black"] forState:UIControlStateNormal];
+        [moreBtn setBackgroundImage:[UIImage imageNamed:@"common_more_white"] forState:UIControlStateHighlighted];
+        [self.scV addSubview:moreBtn];
+        
+        [moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.right.equalTo(imagePic).offset(-20);
+            make.bottom.equalTo(imagePic).offset(-40);
+            make.size.mas_equalTo(CGSizeMake(100, 40));
+        }];
+        
+        [moreBtn addTarget:self action:@selector(clickMoreButton) forControlEvents:UIControlEventTouchUpInside];
     }
     
     self.scV.contentSize = CGSizeMake((_pictures.count + 1) * self.frame.size.width, 0);
     self.pageC.numberOfPages = _pictures.count;
 }
-
+#pragma mark -点击更多按钮时调用的方法
+- (void)clickMoreButton
+{
+    [UIView animateWithDuration:2 animations:^{
+        self.transform = CGAffineTransformMakeScale(2, 2);
+        self.alpha = 0;
+    }completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+}
 #pragma mark - scrollVeiw代理方法
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
